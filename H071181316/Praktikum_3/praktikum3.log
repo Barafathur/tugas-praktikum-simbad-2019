@@ -1,0 +1,149 @@
+c:\xampp\mysql\bin\mysqld.exe, Version: 10.4.6-MariaDB (mariadb.org binary distribution). started with:
+TCP Port: 3306, Named Pipe: C:/xampp/mysql/mysql.sock
+Time		    Id Command	Argument
+191030 13:48:08	     8 Query	create table tfakultas(
+kode varchar(1) primary key,
+nama varchar(200) not null)
+191030 13:56:00	     8 Query	create table tprodi(
+kode int(2) primary key zerofill,
+nama varchar(200) not null,
+kode_fakultas varchar(1) foreign key tfakultas(kode) not null)
+191030 13:57:45	     8 Query	create table tprodi(
+kode int(2) primary key zerofill,
+nama varchar(200) not null,
+191030 14:00:09	     8 Query	create table tprodi(
+kode int(2) zerofill primary key,
+nama varchar(200) not null,
+kode_fakultas varchar(1) not null,
+foreign key (kode_fakultas) references tfakultas(kode))
+191030 14:00:21	     8 Query	desc tprodi
+191030 14:00:36	     8 Query	desc tfakultas
+191030 14:02:47	     8 Query	create table jalur_masuk(
+kode enum('0','3','5') primary key,
+nama varchar(200) not null)
+191030 14:03:00	     8 Query	desc jalur_masuk
+191030 14:10:03	     8 Query	create table tmahasiswa(
+id int(2) zerofill primary key,
+kode_fakultas varchar(1) not null,
+kode_prodi int(2) zerofill not null,
+tahun_masuk int(4) not null,
+jalur_masuk enum('0','3','5')not null,
+nama varchar(200) not null,
+foreign key (kode_fakultas) references tfakultas(kode),
+foreign key (kode_prodi) references tprodi(kode),
+foreign key (jalur_masuk) references jalur_masuk(kode))
+191030 14:10:33	     8 Query	desc tmahasiswa
+191030 14:11:43	     8 Query	create table tnim(
+nama varchar(200) not null,
+nim varchar(10) not null)
+191030 14:11:51	     8 Query	desc tnim
+191030 14:13:18	     8 Query	desc tfakultas
+191030 14:14:23	     8 Query	insert into tfakultas values ('H','MIPA')
+191030 14:15:57	     8 Query	select * from tfakultas
+191030 14:16:11	     8 Query	desc tprodi
+191030 14:18:22	     8 Query	insert into tprodi values ('7','ILMU KOMPUTER','H')
+191030 14:18:33	     8 Query	DESC tprodi
+191030 14:18:47	     8 Query	select * from tprodi
+191030 14:19:23	     8 Query	desc jalur_masuk
+191030 14:20:41	     8 Query	insert into jalur_masuk values ('3','SB')
+191030 14:20:53	     8 Query	select * from jalur_masuk
+191030 14:21:56	     8 Query	desc tmahasiswa
+191030 14:26:15	     8 Query	insert into tmahasiswa (kode_fakultas, kode_prodi, tahun_masuk,jalur_masuk,nama) values ('H','7','2018','3','Fathur Fahrizal')
+191030 14:26:31	     8 Query	select * from tmahasiswa
+191030 14:29:07	     8 Query	drop from tmahasiswa
+191030 14:29:14	     8 Query	drop * from tmahasiswa
+191030 14:29:28	     8 Query	delete * from tmahasiswa
+191030 14:30:41	     8 Query	delete from tmahasiswa
+191030 14:30:49	     8 Query	select * from tmahasiswa
+191030 14:32:07	     8 Query	alter table tmahasiswa modify id in(2) zerofill auto_increment
+191030 14:32:26	     8 Query	alter table tmahasiswa modify id int(2) zerofill auto_increment
+191030 14:32:50	     8 Query	insert into tmahasiswa (kode_fakultas, kode_prodi, tahun_masuk,jalur_masuk,nama) values ('H','7','2018','3','Fathur Fahrizal')
+191030 14:32:55	     8 Query	select * from tmahasiswa
+191030 14:33:57	     8 Query	desc tnim
+191030 14:36:58	     8 Query	insert into tnim select nama, concat(kode_fakultas,kode_prodi,'1',right(tahun_masuk,2),'1',jalur_masuk,id) from tmahasiswa
+191030 14:37:08	     8 Query	select * from tnim
+191030 14:40:30	     8 Query	delete from tnim
+191030 14:42:08	     8 Query	insert into tnim select nama, concat(kode_fakultas,kode_prodi,'1',right(tahun_masuk,2),'1',jalur_masuk,id) from tmahasiswa
+191030 14:42:12	     8 Query	select * from tnim
+191030 14:45:09	     8 Query	insert into tmahasiswa (kode_fakultas, kode_prodi, tahun_masuk,jalur_masuk,nama) values ('H','7','2018','3','ardi s')
+191030 14:45:32	     8 Query	insert into tnim select nama, concat(kode_fakultas,kode_prodi,'1',right(tahun_masuk,2),'1',jalur_masuk,id) from tmahasiswa
+191030 14:45:35	     8 Query	select * from tnim
+191030 14:47:43	     8 Query	delete nama="Fathur Fahrizal",nim from tnim
+191030 14:48:45	     8 Query	delete nam,nim from tnim where nama="Fathur Fhairzal",nim
+191030 14:49:12	     8 Query	delete nam,nim from tnim where nama="Fathur Fahrizal",nim
+191030 14:49:15	     8 Query	delete nam,nim from tnim where nama="Fathur Fahrizal"
+191030 14:50:20	     8 Query	delete nama,nim from tnim where nama="Fathur Fahrizal",nim="H071181301"
+191030 14:50:32	     8 Query	delete nama from tnim where nama="Fathur Fahrizal"
+191030 14:50:46	     8 Query	drop nama from tnim where nama="Fathur Fahrizal"
+191030 14:54:47	     9 Connect	root@localhost as anonymous on 
+		     9 Query	/*!40100 SET @@SQL_MODE='' */
+		     9 Query	/*!40103 SET TIME_ZONE='+00:00' */
+		     9 Query	set optimizer_switch='semijoin=off'
+		     9 Query	SELECT LOGFILE_GROUP_NAME, FILE_NAME, TOTAL_EXTENTS, INITIAL_SIZE, ENGINE, EXTRA FROM INFORMATION_SCHEMA.FILES WHERE FILE_TYPE = 'UNDO LOG' AND FILE_NAME IS NOT NULL AND LOGFILE_GROUP_NAME IS NOT NULL AND LOGFILE_GROUP_NAME IN (SELECT DISTINCT LOGFILE_GROUP_NAME FROM INFORMATION_SCHEMA.FILES WHERE FILE_TYPE = 'DATAFILE' AND TABLESPACE_NAME IN (SELECT DISTINCT TABLESPACE_NAME FROM INFORMATION_SCHEMA.PARTITIONS WHERE TABLE_SCHEMA IN ('praktikum3'))) GROUP BY LOGFILE_GROUP_NAME, FILE_NAME, ENGINE, TOTAL_EXTENTS, INITIAL_SIZE ORDER BY LOGFILE_GROUP_NAME
+		     9 Query	SELECT DISTINCT TABLESPACE_NAME, FILE_NAME, LOGFILE_GROUP_NAME, EXTENT_SIZE, INITIAL_SIZE, ENGINE FROM INFORMATION_SCHEMA.FILES WHERE FILE_TYPE = 'DATAFILE' AND TABLESPACE_NAME IN (SELECT DISTINCT TABLESPACE_NAME FROM INFORMATION_SCHEMA.PARTITIONS WHERE TABLE_SCHEMA IN ('praktikum3')) ORDER BY TABLESPACE_NAME, LOGFILE_GROUP_NAME
+		     9 Query	set optimizer_switch=default
+		     9 Init DB	praktikum3
+		     9 Query	SHOW TABLES LIKE '%'
+		     9 Query	LOCK TABLES `jalur_masuk` READ /*!32311 LOCAL */,`tfakultas` READ /*!32311 LOCAL */,`tmahasiswa` READ /*!32311 LOCAL */,`tnim` READ /*!32311 LOCAL */,`tprodi` READ /*!32311 LOCAL */
+		     9 Query	SELECT engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = DATABASE() AND table_name = 'jalur_masuk'
+		     9 Query	SET SQL_QUOTE_SHOW_CREATE=1
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Query	show create table `jalur_masuk`
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	show fields from `jalur_masuk`
+		     9 Query	SELECT /*!40001 SQL_NO_CACHE */ `kode`, `nama` FROM `jalur_masuk`
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Init DB	praktikum3
+		     9 Query	select @@collation_database
+		     9 Query	SELECT TRIGGER_NAME FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_SCHEMA = DATABASE() AND EVENT_OBJECT_TABLE = 'jalur_masuk'
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	SELECT engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = DATABASE() AND table_name = 'tfakultas'
+		     9 Query	SET SQL_QUOTE_SHOW_CREATE=1
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Query	show create table `tfakultas`
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	show fields from `tfakultas`
+		     9 Query	SELECT /*!40001 SQL_NO_CACHE */ `kode`, `nama` FROM `tfakultas`
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Init DB	praktikum3
+		     9 Query	select @@collation_database
+		     9 Query	SELECT TRIGGER_NAME FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_SCHEMA = DATABASE() AND EVENT_OBJECT_TABLE = 'tfakultas'
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	SELECT engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = DATABASE() AND table_name = 'tmahasiswa'
+		     9 Query	SET SQL_QUOTE_SHOW_CREATE=1
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Query	show create table `tmahasiswa`
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	show fields from `tmahasiswa`
+		     9 Query	SELECT /*!40001 SQL_NO_CACHE */ `id`, `kode_fakultas`, `kode_prodi`, `tahun_masuk`, `jalur_masuk`, `nama` FROM `tmahasiswa`
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Init DB	praktikum3
+		     9 Query	select @@collation_database
+		     9 Query	SELECT TRIGGER_NAME FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_SCHEMA = DATABASE() AND EVENT_OBJECT_TABLE = 'tmahasiswa'
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	SELECT engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = DATABASE() AND table_name = 'tnim'
+		     9 Query	SET SQL_QUOTE_SHOW_CREATE=1
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Query	show create table `tnim`
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	show fields from `tnim`
+		     9 Query	SELECT /*!40001 SQL_NO_CACHE */ `nama`, `nim` FROM `tnim`
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Init DB	praktikum3
+		     9 Query	select @@collation_database
+		     9 Query	SELECT TRIGGER_NAME FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_SCHEMA = DATABASE() AND EVENT_OBJECT_TABLE = 'tnim'
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	SELECT engine FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = DATABASE() AND table_name = 'tprodi'
+		     9 Query	SET SQL_QUOTE_SHOW_CREATE=1
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Query	show create table `tprodi`
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	show fields from `tprodi`
+		     9 Query	SELECT /*!40001 SQL_NO_CACHE */ `kode`, `nama`, `kode_fakultas` FROM `tprodi`
+		     9 Query	SET SESSION character_set_results = 'binary'
+		     9 Init DB	praktikum3
+		     9 Query	select @@collation_database
+		     9 Query	SELECT TRIGGER_NAME FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_SCHEMA = DATABASE() AND EVENT_OBJECT_TABLE = 'tprodi'
+		     9 Query	SET SESSION character_set_results = 'utf8mb4'
+		     9 Query	UNLOCK TABLES
+		     9 Quit	
